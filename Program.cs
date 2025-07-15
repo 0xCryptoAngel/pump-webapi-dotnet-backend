@@ -6,6 +6,9 @@ using PUMP_BACKEND.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.EntityFrameworkCore.Design;
+
 var builder = WebApplication.CreateBuilder(args);
 
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -27,7 +30,7 @@ builder.Services.AddCors(options =>
 
 //Register the DbContext
 builder.Services.AddDbContext<PumpDbContext>(options =>
-  options.UseInMemoryDatabase("PumpDb")
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 
