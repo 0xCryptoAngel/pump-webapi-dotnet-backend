@@ -1,0 +1,89 @@
+# .gitignore for .NET Web API projects
+
+# Build results
+bin/
+obj/
+out/
+[Ll]og/
+*.log
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider & VS Code settings
+.idea/
+.vscode/
+*.code-workspace
+
+# ASP.NET Core specific
+appsettings.json
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# EF Core Migrations (optional: if generated files should be ignored)
+#migrations/
+
+# IIS and Azure artifacts
+*.publishsettings
+.publish/
+Properties/PublishProfiles/
+
+# Dotnet-specific
+project.lock.json
+project.fragment.lock.json
+*.dbmdl
+*.dbproj.schemaview
+
+# Logs
+*.log
+logs/
+*.tlog
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+*.nuspec
+*.psmdcp
+*.cache
+*.vspscc
+
+# JetBrains Rider
+*.sln.iml
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Others
+*.swp
+*.bak
+*.tmp
+*.tmp.*
+*.orig
+*.rej
+
+# Visual Studio
+.vs/
+*.dbmdl
+*.pdb
+*.mdb
+
+# Docker
+**/docker-compose.override.yml
+**/docker-compose.*.yml
+
+# ENV file
+.env
