@@ -1,13 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using PUMP_BACKEND;
-using PUMP_BACKEND.Services;
+using PUMP_BACKEND.Data;
 using PUMP_BACKEND.Middlewares;
-using PUMP_BACKEND.Controllers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Microsoft.EntityFrameworkCore.Design;
+using PUMP_BACKEND.Services.Interfaces;
+using PUMP_BACKEND.Data.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +36,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -82,6 +78,7 @@ if (app.Environment.IsDevelopment())
 
 //Middleware pipeline
 app.UseCors(MyAllowSpecificOrigins);
+app.MapGet("/", () => "helloworld!");
 app.UseHttpsRedirection();
 app.MapControllers();
-app.Run();
+app.Run("http://0.0.0.0:5164");;

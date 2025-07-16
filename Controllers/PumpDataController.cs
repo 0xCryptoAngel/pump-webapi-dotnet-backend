@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PUMP_BACKEND.Models;
+using PUMP_BACKEND.Data;
 using Microsoft.AspNetCore.Authorization;
-using PUMP_BACKEND.Entities;
-using PUMP_BACKEND.Services;
 
 namespace PUMP_BACKEND.Controllers
 {

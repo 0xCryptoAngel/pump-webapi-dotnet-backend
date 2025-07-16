@@ -1,4 +1,4 @@
-using PUMP_BACKEND.Entities;
+using PUMP_BACKEND.Models;
 
 public class Tenant
 {

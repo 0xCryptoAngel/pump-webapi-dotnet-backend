@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using PUMP_BACKEND.Services;
+using PUMP_BACKEND.Data;
 
 #nullable disable
 
 namespace pump_backend.Migrations
 {
     [DbContext(typeof(PumpDbContext))]
-    [Migration("20250715225113_InitialCreate")]
+    [Migration("20250716002318_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace pump_backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PUMP_BACKEND.Entities.Pump", b =>
+            modelBuilder.Entity("PUMP_BACKEND.Models.Pump", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace pump_backend.Migrations
                     b.ToTable("Pumps");
                 });
 
-            modelBuilder.Entity("PUMP_BACKEND.Entities.User", b =>
+            modelBuilder.Entity("PUMP_BACKEND.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace pump_backend.Migrations
                     b.ToTable("Tenants");
                 });
 
-            modelBuilder.Entity("PUMP_BACKEND.Entities.Pump", b =>
+            modelBuilder.Entity("PUMP_BACKEND.Models.Pump", b =>
                 {
                     b.HasOne("Tenant", "Tenant")
                         .WithMany("Pumps")
@@ -152,7 +152,7 @@ namespace pump_backend.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("PUMP_BACKEND.Entities.User", b =>
+            modelBuilder.Entity("PUMP_BACKEND.Models.User", b =>
                 {
                     b.HasOne("Tenant", "Tenant")
                         .WithMany("Users")

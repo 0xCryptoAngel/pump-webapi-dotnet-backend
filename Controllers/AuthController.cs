@@ -1,7 +1,10 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PUMP_BACKEND.Entities;
-using PUMP_BACKEND.Services;
+using Microsoft.EntityFrameworkCore;
+using PUMP_BACKEND.Data;
+using PUMP_BACKEND.Models;
+using PUMP_BACKEND.Services.Interfaces;
 
 namespace PUMP_BACKEND.Controllers;
 
@@ -10,36 +13,40 @@ namespace PUMP_BACKEND.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ITokenService _tokenService;
-    private readonly IUserService _userService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+
+    private readonly PumpDbContext _pumpDb;
 
     public AuthController(
         ITokenService tokenService,
-        IUserService userService,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        PumpDbContext pumpDb
+        )
     {
         _tokenService = tokenService;
-        _userService = userService;
         _httpContextAccessor = httpContextAccessor;
+        _pumpDb = pumpDb;
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        
         if (request == null)
             return BadRequest("Missing or invalid request body.");
-
-        var tenant = _httpContextAccessor.HttpContext?.Items["Tenant"]?.ToString();
-        if (string.IsNullOrEmpty(tenant))
+        var subdomain = _httpContextAccessor.HttpContext?.Items["Tenant"]?.ToString();
+        var tenant = await _pumpDb.Tenants.Include(t => t.Users).FirstOrDefaultAsync(t => t.Name == subdomain);
+        if (tenant == null)
             return BadRequest("Tenant not resolved from subdomain.");
+        var user = tenant.Users.FirstOrDefault(u => u.Username == request.Username);
+        if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            return Unauthorized("Invalid credentials");
 
-        var user = _userService.GetUserByUsername(tenant, request.Username);
+        // var user = _userService.GetUserByUsername(tenant, request.Username);
 
-        if (user == null || user.Password != request.Password)
-            return Unauthorized();
+        // if (user == null || user.Password != request.Password)
+        //     return Unauthorized();
 
-        var token = _tokenService.GenerateJwt(user.Username, tenant);
+        var token = _tokenService.GenerateJwt(user.Username, subdomain);
         return Ok(new { Token = token });
     }
 

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using PUMP_BACKEND.Entities;
+using PUMP_BACKEND.Models;
  
-namespace PUMP_BACKEND.Services
+namespace PUMP_BACKEND.Data
     {
     public class PumpDbContext  : DbContext
     {
@@ -30,5 +30,6 @@ namespace PUMP_BACKEND.Services
 
             // You can add further constraints or indexes here if desired
         }
-    }
+
+  }
 }

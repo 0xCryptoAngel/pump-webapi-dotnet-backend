@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace PUMP_BACKEND.Services;
+namespace PUMP_BACKEND.Services.Interfaces;
 
 public class TokenService : ITokenService
 {

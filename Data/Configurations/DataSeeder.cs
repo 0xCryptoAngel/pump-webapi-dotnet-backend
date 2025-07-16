@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using PUMP_BACKEND.Entities;
+using PUMP_BACKEND.Models;
 
-namespace PUMP_BACKEND.Services
+namespace PUMP_BACKEND.Data.Configurations
 {
     public class DataSeeder
     {
@@ -21,9 +21,9 @@ namespace PUMP_BACKEND.Services
                 var tenant1 = new Tenant
                 {
                     TenantId = 1,
-                    Name = "Tenant Alpha",
+                    Name = "tenant1",
                     Email = "alpha@company.com",
-                    Password = "hashedpassword1", // Replace with actual hash
+                    Password = BCrypt.Net.BCrypt.HashPassword("hashedpassword1"), // Replace with actual hash
                     CreatedAt = DateTime.UtcNow
                 };
 
@@ -32,7 +32,7 @@ namespace PUMP_BACKEND.Services
                     TenantId = 2,
                     Name = "Tenant Beta",
                     Email = "beta@company.com",
-                    Password = "hashedpassword2", // Replace with actual hash
+                    Password = BCrypt.Net.BCrypt.HashPassword("hashedpassword2"), // Replace with actual hash
                     CreatedAt = DateTime.UtcNow
                 };
 
@@ -46,7 +46,7 @@ namespace PUMP_BACKEND.Services
                     TenantId = tenant1.TenantId,
                     Username = "alpha_admin",
                     Email = "admin@alpha.com",
-                    Password = "hashedpassword1", // Replace with actual hash
+                    Password = BCrypt.Net.BCrypt.HashPassword("hashedpassword1"), // Replace with actual hash
                     CreatedAt = DateTime.UtcNow
                 };
 
@@ -56,7 +56,7 @@ namespace PUMP_BACKEND.Services
                     TenantId = tenant1.TenantId,
                     Username = "alpha_user",
                     Email = "user@alpha.com",
-                    Password = "hashedpassword2", // Replace with actual hash
+                    Password = BCrypt.Net.BCrypt.HashPassword("hashedpassword2"), // Replace with actual hash
                     CreatedAt = DateTime.UtcNow
                 };
 
@@ -66,7 +66,7 @@ namespace PUMP_BACKEND.Services
                     TenantId = tenant2.TenantId,
                     Username = "beta_admin",
                     Email = "admin@beta.com",
-                    Password = "hashedpassword3", // Replace with actual hash
+                    Password = BCrypt.Net.BCrypt.HashPassword("hashedpassword3"), // Replace with actual hash
                     CreatedAt = DateTime.UtcNow
                 };
 

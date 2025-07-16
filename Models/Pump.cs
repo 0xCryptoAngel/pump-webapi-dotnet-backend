@@ -1,4 +1,4 @@
-namespace PUMP_BACKEND.Entities;
+namespace PUMP_BACKEND.Models;
 
 public class Pump
 {

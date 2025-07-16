@@ -1,4 +1,4 @@
-namespace PUMP_BACKEND.Services
+namespace PUMP_BACKEND.Services.Interfaces
 { 
     public interface ITokenService
     {
