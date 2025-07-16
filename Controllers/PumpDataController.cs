@@ -21,6 +21,7 @@ namespace PUMP_BACKEND.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pump>>> GetPumps()
         {
+            Console.WriteLine("hello");
             return await _context.Pumps.ToListAsync();
         }
 

@@ -12,8 +12,8 @@ using PUMP_BACKEND.Data;
 namespace pump_backend.Migrations
 {
     [DbContext(typeof(PumpDbContext))]
-    [Migration("20250716002318_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250716022706_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

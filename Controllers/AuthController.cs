@@ -40,13 +40,7 @@ public class AuthController : ControllerBase
         var user = tenant.Users.FirstOrDefault(u => u.Username == request.Username);
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             return Unauthorized("Invalid credentials");
-
-        // var user = _userService.GetUserByUsername(tenant, request.Username);
-
-        // if (user == null || user.Password != request.Password)
-        //     return Unauthorized();
-
-        var token = _tokenService.GenerateJwt(user.Username, subdomain);
+        var token = _tokenService.GenerateJwt(user.Username, tenant.Name);
         return Ok(new { Token = token });
     }
 
@@ -57,6 +51,6 @@ public class AuthController : ControllerBase
         var tenant = _httpContextAccessor.HttpContext?.Items["Tenant"]?.ToString();
         var username = User.Identity?.Name;
 
-        return Ok(new { Tenant = tenant, Username = username, Message = "Tenant-specific profile data." });
+        return Ok(new { Tenant = tenant, Username = username});
     }
 }

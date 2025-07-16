@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
 namespace PUMP_BACKEND.Models;
 
 public class Pump
-{
+{   
+    [Key]
     public int Id { get; set; }  // Primary Key
     public int TenantId { get; set; }  // Foreign Key
 
@@ -16,7 +20,8 @@ public class Pump
     public int MinPressure { get; set; }
     public int MaxPressure { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    // Navigation property
-    public Tenant Tenant { get; set; } = default!;
+
+    [JsonIgnore]
+    public Tenant? Tenant { get; set; }
 }
 

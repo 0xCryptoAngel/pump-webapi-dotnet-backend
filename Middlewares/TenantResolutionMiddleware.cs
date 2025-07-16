@@ -12,7 +12,6 @@ public class TenantResolutionMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         var host = context.Request.Host.Host;
-        Console.WriteLine("host" + host);
         var parts = host.Split('.');
         if (parts.Length > 2 || (parts.Length == 2 && host.Contains("localhost")))
         {

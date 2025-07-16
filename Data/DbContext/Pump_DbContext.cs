@@ -14,21 +14,23 @@ namespace PUMP_BACKEND.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure relationships and constraints if needed:
-
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Tenant)
                 .WithMany(t => t.Users)
                 .HasForeignKey(u => u.TenantId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Pump>()
-                .HasOne(p => p.Tenant)
-                .WithMany(t => t.Pumps)
-                .HasForeignKey(p => p.TenantId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Pump>(entity =>
+                {
+                    entity.HasKey(p => p.Id);
+                    entity.Property(p => p.Id)
+                        .ValueGeneratedOnAdd();
+                    entity.HasOne(p => p.Tenant)
+                        .WithMany(t => t.Pumps)
+                        .HasForeignKey(p => p.TenantId)
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
-            // You can add further constraints or indexes here if desired
         }
 
   }

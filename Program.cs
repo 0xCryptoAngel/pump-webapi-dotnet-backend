@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
             )
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials(); // if needed;
+            .AllowCredentials(); 
         });
 });
 
@@ -29,14 +29,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<PumpDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
-
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<DataSeeder>();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -51,16 +49,9 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-//Register DataSeeder
-builder.Services.AddTransient<DataSeeder>();
+
 
 var app = builder.Build();
-
-
-
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseMiddleware<TenantResolutionMiddleware>();
 
 // Seed the database before app.Run()
 using (var scope = app.Services.CreateScope())
@@ -77,8 +68,10 @@ if (app.Environment.IsDevelopment())
 }
 
 //Middleware pipeline
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseMiddleware<TenantResolutionMiddleware>();
 app.UseCors(MyAllowSpecificOrigins);
-app.MapGet("/", () => "helloworld!");
 app.UseHttpsRedirection();
 app.MapControllers();
-app.Run("http://0.0.0.0:5164");;
+app.Run();
